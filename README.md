@@ -1,7 +1,7 @@
 # liconv
 
 ## Description
-A small utility which helps to convert a dependencies list generated with **license-maven-plugin** to a CSV file which is handy for reports that are often required by a legal team in large enterprises, etc. The utility will gather the basic information (component name, groupId, version) available in the original report itself and also consult local and remote .pom files for further information (component description, URL, license information).
+A small utility which helps to convert a dependencies report generated with **license-maven-plugin** to a CSV file which is handy for reports that are often required by a legal team in large enterprises, etc. The utility will gather the basic information (component name, groupId, version) available in the original report itself and also consult local and remote .pom files for further information (component description, URL, license information).
 
 The list of fields that is currently generated:
 - Component
