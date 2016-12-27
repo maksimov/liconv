@@ -34,7 +34,6 @@ func init() {
 	t := httpcache.NewTransport(cache)
 	client = http.Client{Transport: t}
 	localBase = userHomeDir() + "/.m2/repository/"
-	fmt.Println(localBase)
 }
 
 // ReadPOMFile reads a POM file from local $HOME/.m2/repository and if it fails fetches one from maven.org
@@ -97,8 +96,12 @@ func readRemote(uri string) (string, error) {
 	return buf.String(), nil
 }
 
+var isWindows = func() bool {
+	return runtime.GOOS == "windows"
+}
+
 func userHomeDir() string {
-	if runtime.GOOS == "windows" {
+	if isWindows() {
 		home := os.Getenv("HOMEDRIVE") + os.Getenv("HOMEPATH")
 		if home == "" {
 			home = os.Getenv("USERPROFILE")

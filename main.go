@@ -21,12 +21,17 @@ TODO:
 **/
 var wg sync.WaitGroup
 
-const versionRegexp string = `(\d+\.)?(\d+\.)?(\*|\d+)`
+const versionRegexp = `(\d+\.)?(\d+\.)?(\*|\d+)`
+const header = `Component Name,Version,Description,Use,Type,Language,Website,License Name,Lic.Version,Lic.Type,Lic. Website URL\n`
+const template = `%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s\n`
 
 var versionRegexpCompiled *regexp.Regexp
 
 // escape to avoid conversion to number in excel, e.g. make versions return as "=""1.0"""
 func escapeNumberString(s string) string {
+	if s == "" {
+		return ""
+	}
 	return `"="` + strconv.Quote(s) + `""`
 }
 
@@ -86,9 +91,9 @@ func worker(wn int, in <-chan input.Dependency, out chan<- Component) {
 
 func writeResults(out chan Component, writer io.Writer) int {
 	written := 0
-	fmt.Fprintf(writer, "Component Name,Version,Description,Use,Type,Language,Website,License Name,Lic.Version,Lic.Type,Lic. Website URL\n")
+	fmt.Fprintf(writer, header)
 	for c := range out {
-		fmt.Fprintf(writer, fmt.Sprintf("%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s\n",
+		fmt.Fprintf(writer, fmt.Sprintf(template,
 			c.Name, c.Version, c.Description, c.Use, c.Type, c.Language, c.SiteURL, c.LicenseName, c.LicenseVersion, c.LicenseType, c.LicenseSiteURL))
 		written++
 	}
