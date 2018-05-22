@@ -21,14 +21,15 @@ The list of fields that is currently generated:
 ## Run
 Run `license-maven-plugin` on your Maven project: 
 ```
-mvn license:aggregate-download-licenses
+mvn org.codehaus.mojo:license-maven-plugin:1.12:aggregate-download-licenses
 ```
-This will generate a `licenses.xml` in `target\resources` directory. 
+This will generate a `licenses.xml` in `target/generated-resources` directory. 
 
 Run `liconv` like so:
 ```
-liconv -o output.csv licenses.xml
+liconv target/generated-resources/licenses.xml
 ```
+This will generate a `results.csv` file
 
 ## Build
 
